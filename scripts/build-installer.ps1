@@ -103,7 +103,7 @@ $setup = Join-Path $root "dist\BiraFlow-Setup-$version.exe"
 $sha = (Get-FileHash $setup -Algorithm SHA256).Hash.ToLower()
 $url = if ($Repo) { "https://github.com/$Repo/releases/download/v$version/BiraFlow-Setup-$version.exe" } else { "" }
 [ordered]@{ version = $version; url = $url; sha256 = $sha; notes = $Notes } |
-    ConvertTo-Json | Set-Content "dist\latest.json" -Encoding utf8
+    ConvertTo-Json | ForEach-Object { [System.IO.File]::WriteAllText("dist\latest.json", $_, (New-Object System.Text.UTF8Encoding($false))) }
 
 $size = [math]::Round((Get-Item $setup).Length / 1MB, 1)
 Write-Host ""
