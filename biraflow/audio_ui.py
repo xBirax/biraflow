@@ -117,7 +117,7 @@ class AudioWindow:
         body = ttk.Frame(self.top, padding=(px(24), px(20), px(24), px(18)))
         body.pack(fill="both", expand=True)
         ttk.Label(body, text=_t("Transcrever áudio"), font="SunValleyTitleFont").pack(anchor="w")
-        ttk.Label(body, text="Áudios do WhatsApp (.ogg/.opus), MP3, M4A, WAV… O texto fica pronto para copiar.",
+        ttk.Label(body, text=_t("Áudios do WhatsApp (.ogg/.opus), MP3, M4A, WAV… O texto fica pronto para copiar."),
                   style="Muted.TLabel").pack(anchor="w", pady=(px(2), px(14)))
 
         # drop zone: a dashed box that lights up while a file is dragged over it
@@ -179,10 +179,10 @@ class AudioWindow:
         color = pal.accent if self._zone_hot else pal.border
         c.create_rectangle(px(2), px(2), w - px(2), h - px(2), outline=color, width=px(2), dash=(px(6), px(4)),
                            fill=pal.nav_hover if self._zone_hot else pal.bg)
-        c.create_text(w // 2, h // 2 - px(12), text="Arraste o áudio para cá",
+        c.create_text(w // 2, h // 2 - px(12), text=_t("Arraste o áudio para cá"),
                       fill=pal.accent if self._zone_hot else pal.text, font="SunValleySubtitleFont")
         c.create_text(w // 2, h // 2 + px(18),
-                      text="Do WhatsApp: ⋮ no áudio → Baixar, depois arraste da pasta Downloads (ou Ctrl+V)",
+                      text=_t("Do WhatsApp: ⋮ no áudio → Baixar, depois arraste da pasta Downloads (ou Ctrl+V)"),
                       fill=pal.muted, font="SunValleyCaptionFont")
 
     def _buttons(self) -> None:

@@ -92,8 +92,11 @@ def option_labels() -> list[str]:
     itself, in every list.
     """
     from biraflow import settings_ui
+    from biraflow.tray import TOOLTIPS
 
     found: dict[str, None] = {}
+    for label in TOOLTIPS.values():
+        found.setdefault(label, None)
     for _code, label in settings_ui.PILL_POSITIONS:
         found.setdefault(label, None)
     for _code, label in settings_ui.PILL_SIZES:
@@ -267,6 +270,10 @@ def write_catalog(code: str, strings: dict, prompts_: dict, spoken: dict) -> Pat
 
 
 def main() -> int:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--lang", action="append", default=[], help="target language (en, es, fr...)")
     ap.add_argument("--base-url", default=os.environ.get("LLM_BASE_URL", ""), help="OpenAI-compatible endpoint")
@@ -274,6 +281,7 @@ def main() -> int:
     ap.add_argument("--key-env", default="OPENAI_API_KEY", help="environment variable with the key")
     ap.add_argument("--key-file", default="", help="file with the key (a trailing newline is ignored)")
     ap.add_argument("--batch", type=int, default=25, help="strings per request")
+    ap.add_argument("--timeout", type=int, default=180, help="seconds waiting for the model")
     ap.add_argument("--check", action="store_true", help="only report what is missing")
     args = ap.parse_args()
 
@@ -297,7 +305,7 @@ def main() -> int:
     key = os.environ.get(args.key_env, "")
     if args.key_file:
         key = Path(args.key_file).read_text(encoding="utf-8-sig").strip()
-    model = Model(args.base_url, args.model, key)
+    model = Model(args.base_url, args.model, key, timeout=args.timeout)
 
     for code in args.lang:
         name = i18n.LANGUAGES.get(code, (code, code))[0]
