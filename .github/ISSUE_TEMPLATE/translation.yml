@@ -1,0 +1,38 @@
+name: Translation
+description: Fix or add a language
+labels: ["translation"]
+body:
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - Português (Brasil)
+        - English
+        - Español
+        - Français
+        - Deutsch
+        - Italiano
+        - 简体中文
+        - 日本語
+        - 한국어
+        - Another one
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is being translated?
+      options:
+        - The interface (texts on screen)
+        - The spoken commands (the words the app listens for)
+        - The LLM prompts
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: The words that need a human (the ones the model gets wrong), if any.
+    validations:
+      required: false

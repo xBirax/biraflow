@@ -1,0 +1,76 @@
+name: Release
+
+# Builds the installer and publishes it on the Releases page, so the installed app can
+# update itself. The signature is made by SignPath when the secrets are set (free for open
+# source projects); without them the build is published unsigned.
+
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: "What changed in this release"
+        required: false
+        default: ""
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+          python -m pip install pyinstaller
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Tests
+        run: python -m pytest -q
+
+      - name: Build the installer
+        shell: pwsh
+        run: |
+          $notes = "${{ github.event.inputs.notes }}"
+          $signed = $env:SIGNPATH_POLICY -and $env:SIGNPATH_TOKEN
+          if ($signed) {
+            .\.venv\Scripts\python -m biraflow --check
+            powershell -ExecutionPolicy Bypass -File scripts\build-installer.ps1 `
+              -Repo "${{ github.repository }}" -Notes $notes -Unsigned
+          } else {
+            Write-Host "No SignPath secrets: building without a signature."
+            powershell -ExecutionPolicy Bypass -File scripts\build-installer.ps1 `
+              -Repo "${{ github.repository }}" -Notes $notes -Unsigned
+          }
+
+      - name: Sign with SignPath
+        if: env.SIGNPATH_POLICY != '' && env.SIGNPATH_TOKEN != ''
+        uses: signpath/github-action@v1
+        with:
+          configuration-uuid: ${{ env.SIGNPATH_POLICY }}
+          organization-id: ${{ env.SIGNPATH_ORGANIZATION }}
+          token: ${{ env.SIGNPATH_TOKEN }}
+          artifact-configuration: ${{ env.SIGNPATH_ARTIFACT }}
+          files-folder: dist
+          output-folder: dist/signed
+
+      - name: Publish
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/BiraFlow-Setup-*.exe
+            dist/latest.json
+          body: ${{ github.event.inputs.notes }}

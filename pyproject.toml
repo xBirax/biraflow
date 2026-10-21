@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biraflow"
+version = "1.1.1"
+description = "Ditado por voz em qualquer app do Windows: whisper.cpp local ou API Whisper, com limpeza por LLM."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "sounddevice>=0.4.6",
+    "requests>=2.31",
+    "pystray>=0.19",
+    "Pillow>=10",
+    "sv-ttk>=2.6",
+    "comtypes>=1.4",
+    "vosk>=0.3.45",
+    "soundfile>=0.12",
+    "tkinterdnd2>=0.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.gui-scripts]
+biraflow = "biraflow.app:main"
+
+[tool.setuptools]
+packages = ["biraflow"]
+
+[tool.setuptools.package-data]
+biraflow = ["assets/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# a crash in a worker thread (controller, jobs) fails the test instead of passing silently
+filterwarnings = ["error::pytest.PytestUnhandledThreadExceptionWarning"]
+# tests/integration: real engines + synthetic audio (scripts/make-test-audio.ps1), opt-in
+markers = ["integration: motor real + fixtures sinteticas (pytest -m integration)"]
+addopts = "-m 'not integration'"

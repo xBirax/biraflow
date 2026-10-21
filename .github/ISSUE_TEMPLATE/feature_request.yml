@@ -1,0 +1,34 @@
+name: Feature request
+description: Something that would make the app better for you
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The situation, not the solution. It helps to know what you do today instead.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like the app to do?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you use today for this?
+    validations:
+      required: false
+  - type: dropdown
+    id: language
+    attributes:
+      label: Which language would this touch?
+      options:
+        - The interface
+        - The spoken commands
+        - The LLM prompts
+        - It does not matter
+    validations:
+      required: true
