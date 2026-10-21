@@ -18,6 +18,11 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 $python = Join-Path $root ".venv\Scripts\python.exe"
+if (-not (Test-Path $python)) {
+    # no virtual environment (the CI installs the dependencies in the runner's Python)
+    $python = (Get-Command python -ErrorAction SilentlyContinue).Source
+    if (-not $python) { throw "Python not found: install it or run scripts\install.ps1 first" }
+}
 
 # --- tools -------------------------------------------------------------------------
 function Find-Iscc {
