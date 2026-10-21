@@ -17,9 +17,17 @@ on:
 permissions:
   contents: write
 
+env:
+  # the secrets of SignPath (empty until the Foundation approves the project)
+  SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+  SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
+  SIGNPATH_PROJECT_SLUG: ${{ secrets.SIGNPATH_PROJECT_SLUG }}
+  SIGNPATH_SIGNING_POLICY_SLUG: ${{ secrets.SIGNPATH_SIGNING_POLICY_SLUG }}
+  SIGNPATH_ARTIFACT_CONFIGURATION_SLUG: ${{ secrets.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+
 jobs:
   build:
-    name: Build and publish
+    name: Build, sign and publish
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,33 +52,55 @@ jobs:
         shell: pwsh
         run: |
           $notes = "${{ github.event.inputs.notes }}"
-          $signed = $env:SIGNPATH_POLICY -and $env:SIGNPATH_TOKEN
-          if ($signed) {
-            .\.venv\Scripts\python -m biraflow --check
+          $thumb = "${{ vars.SIGNER_THUMBPRINT }}"
+          if ($thumb) {
+            # signed by SignPath in the step below: only the certificate is pinned here
             powershell -ExecutionPolicy Bypass -File scripts\build-installer.ps1 `
-              -Repo "${{ github.repository }}" -Notes $notes -Unsigned
+              -Repo "${{ github.repository }}" -Notes $notes -SignerThumbprint $thumb
           } else {
             Write-Host "No SignPath secrets: building without a signature."
             powershell -ExecutionPolicy Bypass -File scripts\build-installer.ps1 `
               -Repo "${{ github.repository }}" -Notes $notes -Unsigned
           }
 
-      - name: Sign with SignPath
-        if: env.SIGNPATH_POLICY != '' && env.SIGNPATH_TOKEN != ''
-        uses: signpath/github-action@v1
+      - name: Upload the installer for signing
+        id: upload
+        uses: actions/upload-artifact@v4
         with:
-          configuration-uuid: ${{ env.SIGNPATH_POLICY }}
-          organization-id: ${{ env.SIGNPATH_ORGANIZATION }}
-          token: ${{ env.SIGNPATH_TOKEN }}
-          artifact-configuration: ${{ env.SIGNPATH_ARTIFACT }}
-          files-folder: dist
-          output-folder: dist/signed
+          name: installer
+          path: dist/BiraFlow-Setup-*.exe
+          if-no-files-found: error
+
+      - name: Sign with SignPath
+        if: env.SIGNPATH_API_TOKEN != '' && env.SIGNPATH_SIGNING_POLICY_SLUG != ''
+        uses: SignPath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ env.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ env.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ steps.upload.outputs.artifact-id }}
+          output-artifact-directory: dist/signed
+          skip-decompress: true
 
       - name: Publish
-        if: github.event_name == 'workflow_dispatch'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            dist/BiraFlow-Setup-*.exe
-            dist/latest.json
-          body: ${{ github.event.inputs.notes }}
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $manifest = Get-Content "dist\latest.json" -Raw | ConvertFrom-Json
+          $version = $manifest.version
+          $signed = Get-ChildItem "dist\signed\*.exe" -ErrorAction SilentlyContinue
+          $files = if ($signed) { $signed } else { Get-ChildItem "dist\BiraFlow-Setup-*.exe" }
+          $notes = "${{ github.event.inputs.notes }}"
+          if (-not $notes) { $notes = $manifest.notes }
+          if (-not $notes) { $notes = "Bira Flow $version" }
+          $tag = "v$version"
+          if (gh release view $tag 2>$null) {
+            gh release upload $tag @($files.FullName) "dist\latest.json" --clobber
+            gh release edit $tag --notes $notes
+          } else {
+            gh release create $tag @($files.FullName) "dist\latest.json" --title "Bira Flow $version" --notes $notes
+          }
+          Write-Host "Published: https://github.com/${{ github.repository }}/releases/tag/$tag"
