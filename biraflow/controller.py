@@ -1050,7 +1050,7 @@ class Controller:
         try:
             hotkey = parse_hotkey(settings.hotkey.keys)
         except HotkeyError as e:
-            errors.insert(0, f"Atalho inválido: {e}")
+            errors.insert(0, _t('Atalho inválido: {0}').format(e))
             hotkey = self.hotkey
             settings.hotkey.keys = self.hotkey.text
         self.settings = settings

@@ -42,6 +42,8 @@ POSITIONAL: dict[str, tuple[int, ...]] = {
     "preview": (0,),        # pill.preview(text)
     "notify": (0,),         # tray.notify(text)
     "Item": (0,),           # pystray.MenuItem(text, action)
+    "_status": (0,),        # the status line of the audio window
+    "insert": (1,),         # tkinter Text.insert(index, text, ...)
     "showinfo": (0, 1),
     "showerror": (0, 1),
     "showwarning": (0, 1),
@@ -59,6 +61,12 @@ TUPLE_ARGS: dict[str, tuple[tuple[int, int], ...]] = {
 TEXT_KEYWORD = {
     "Label", "Button", "Checkbutton", "Radiobutton", "Menu", "Entry",
     "configure", "heading", "insert", "title", "set_title",
+}
+
+# Dialogs whose title= and message= go to the user.
+TITLE_KEYWORD = {
+    "asksaveasfilename", "askopenfilename", "askdirectory",
+    "showinfo", "showerror", "showwarning", "askyesno", "askokcancel",
 }
 
 # Files with interface text.
@@ -129,7 +137,7 @@ def _positions(tree: ast.AST) -> list[ast.AST]:
         for kw in node.keywords:
             if kw.arg == "text" and name in TEXT_KEYWORD:
                 out.extend(_strings_in(kw.value))
-            if name.startswith("show") and kw.arg in ("title", "message"):
+            if name in TITLE_KEYWORD and kw.arg in ("title", "message"):
                 out.extend(_strings_in(kw.value))
     return out
 

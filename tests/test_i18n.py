@@ -82,3 +82,24 @@ def test_language_setting_round_trip(tmp_path):
     again, errors = load_settings(paths)
     assert again.ui.language == "en"
     assert not errors
+
+
+TRANSLATED = ["en", "es", "fr", "de", "it", "zh-Hans", "ja", "ko"]
+
+
+@pytest.mark.parametrize("code", TRANSLATED)
+def test_every_catalog_has_the_three_sections(code):
+    data = i18n._read(code)
+    assert data["strings"]
+    assert data["prompts"]
+    assert data["spoken"]
+    for key in ("comma", "period", "send", "cancel", "undo", "at", "dot", "sign_off"):
+        assert data["spoken"].get(key), f"{code}: falta a fala {key}"
+
+
+@pytest.mark.parametrize("code", TRANSLATED)
+def test_the_spoken_comma_works_in_every_language(code):
+    """The word the user speaks for "comma" has to become a comma."""
+    i18n.set_language(code)
+    word = i18n.spoken_list("comma")[0]
+    assert "," in textproc.spoken_punctuation(f"hello {word} world")

@@ -267,8 +267,7 @@ class AudioWindow:
         audio = [f for f in files if f.is_file() and audiofile.is_audio(f)]
         skipped = [f for f in files if f not in audio]
         if skipped and not audio:
-            self._status(f"\"{skipped[0].name}\" não é um áudio que eu reconheça "
-                         f"({', '.join(audiofile.AUDIO_EXTENSIONS[:6])}…).", error=True)
+            self._status(_t('"{0}" não é um áudio que eu reconheça ({1}…).').format(skipped[0].name, ', '.join(audiofile.AUDIO_EXTENSIONS[:6])), error=True)
             return
         if self.meeting is not None:   # a file now: the window is "Transcrever áudio" again
             self.clear()
@@ -344,7 +343,7 @@ class AudioWindow:
 
     def _file_done(self, path: Path, r) -> None:
         if not r.text.strip():
-            self._status(f"{path.name}: nenhuma fala reconhecida.", error=True)
+            self._status(_t('{0}: nenhuma fala reconhecida.').format(path.name), error=True)
             return
         if self.text.get("1.0", "end").strip():
             self.text.insert("end", "\n\n")
@@ -359,7 +358,7 @@ class AudioWindow:
         if self.v_autocopy.get():
             self._copy_text(r.text.strip())
             copied = " Copiado: cole com Ctrl+V."
-        self._status(f"Pronto em {r.elapsed:.1f} s ({engine}).{copied}{note}")
+        self._status(_t('Pronto em {0:.1f} s ({1}).{2}{3}').format(r.elapsed, engine, copied, note))
         try:
             self.app.controller.history.add(raw=f"{path.name}: {r.text}", text=r.text, app="audio-file",
                                             mode="file", seconds=r.seconds)
@@ -374,7 +373,7 @@ class AudioWindow:
         try:
             inserter.set_text(text)
         except Exception as e:
-            self._status(f"Não consegui copiar: {e}", error=True)
+            self._status(_t('Não consegui copiar: {0}').format(e), error=True)
 
     def copy(self) -> None:
         try:
@@ -383,7 +382,7 @@ class AudioWindow:
             whole = len(self.results) != 1 or self.text.edit_modified()
             text = self.text.get("1.0", "end") if whole else self.results[-1][1]
         self._copy_text(text.strip())
-        self._status("Copiado: cole com Ctrl+V.")
+        self._status(_t("Copiado: cole com Ctrl+V."))
 
     def summarize(self) -> None:
         from .cleanup import Cleaner
@@ -400,16 +399,16 @@ class AudioWindow:
 
     def _summary_done(self, st: dict) -> None:
         if st["error"]:
-            self._status(f"Não consegui resumir: {st['error']}", error=True)
+            self._status(_t('Não consegui resumir: {0}').format(st['error']), error=True)
             return
-        self.text.insert("end", "\n\nResumo\n", "head")
+        self.text.insert("end", _t("\n\nResumo\n"), "head")
         self.text.insert("end", st["result"].strip())
         self.text.see("end")
         if self.v_autocopy.get():
             self._copy_text(st["result"].strip())
-            self._status("Resumo pronto e copiado.")
+            self._status(_t("Resumo pronto e copiado."))
         else:
-            self._status("Resumo pronto.")
+            self._status(_t("Resumo pronto."))
 
     def save_txt(self) -> None:
         from tkinter import filedialog
@@ -417,11 +416,11 @@ class AudioWindow:
         ext, kind = (".md", ("Markdown", "*.md")) if self.meeting else (".txt", ("Texto", "*.txt"))
         name = (self.meeting.folder.name if self.meeting else
                 self.results[-1][0].stem if self.results else "transcricao") + ext
-        path = filedialog.asksaveasfilename(parent=self.top, title="Salvar transcrição", initialfile=name,
+        path = filedialog.asksaveasfilename(parent=self.top, title=_t("Salvar transcrição"), initialfile=name,
                                             defaultextension=ext, filetypes=[kind])
         if path:
             Path(path).write_text(self.text.get("1.0", "end").strip() + "\n", encoding="utf-8")
-            self._status(f"Salvo em {path}")
+            self._status(_t('Salvo em {0}').format(path))
 
     # --- a meeting (docs/PLANO-REUNIOES.md, Fase 5) ----------------------------------
 
@@ -434,7 +433,7 @@ class AudioWindow:
 
         m = MeetingFolder.open(folder)
         if m is None:
-            self._status(f"Não consegui abrir a reunião {folder.name}.", error=True)
+            self._status(_t('Não consegui abrir a reunião {0}.').format(folder.name), error=True)
             return
         self.meeting = m
         started = datetime.fromisoformat(m.state["started"])
@@ -453,9 +452,9 @@ class AudioWindow:
         shown = transcript
         if notes.is_file():
             note_text = notes.read_text(encoding="utf-8").strip()
-            self.text.insert("end", "Notas\n", "head")
+            self.text.insert("end", _t("Notas\n"), "head")
             self.text.insert("end", note_text + "\n\n")
-            self.text.insert("end", "Transcrição\n", "head")
+            self.text.insert("end", _t("Transcrição\n"), "head")
             shown = note_text + "\n\n" + transcript
         self.text.insert("end", transcript)
         self.text.edit_modified(False)
@@ -500,15 +499,15 @@ class AudioWindow:
         if self.meeting is None:   # "Limpar" while it ran
             return
         if st["error"]:
-            self._status(f"Não deu certo: {st['error']}", error=True)
+            self._status(_t('Não deu certo: {0}').format(st['error']), error=True)
             return
         self._meeting_text()
         if st["kind"] == "notes" and st["result"] is None:
             error = self.meeting.state.get("notes_error")
-            self._status(f"Não consegui gerar as notas: {error}" if error else "Nada foi falado: sem notas.",
+            self._status(_t('Não consegui gerar as notas: {0}').format(error) if error else _t("Nada foi falado: sem notas."),
                          error=bool(error))
         else:
-            self._status("Notas prontas." if st["kind"] == "notes" else self._meeting_summary())
+            self._status(_t("Notas prontas.") if st["kind"] == "notes" else self._meeting_summary())
 
     def open_meeting_folder(self) -> None:
         import os

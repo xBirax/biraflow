@@ -1273,11 +1273,11 @@ class SettingsWindow:
             ttk.Radiobutton(c.frame, text=_t(name), value=code, variable=self.v_engine,
                             style="Card.TRadiobutton").grid(row=c.row, column=0, sticky="w", pady=(self.px(6), 0))
             if code == "local":
-                status = (_t("whisper.cpp installed ✓") if local_ok
-                          else _t("not installed: run scripts\\setup-whisper.ps1"))
+                status = (_t("whisper.cpp instalado ✓") if local_ok
+                          else _t("não instalado: rode scripts\\setup-whisper.ps1"))
             elif code in API:
-                status = (_t("key configured ✓") if self.env_all.get(API[code][1])
-                          else _t("no key (API keys page)"))
+                status = (_t("chave configurada ✓") if self.env_all.get(API[code][1])
+                          else _t("sem chave (página Chaves de API)"))
             else:
                 status = ""
             ttk.Label(c.frame, text=_t(desc) + (f"  ·  {status}" if status else ""), style="CardMuted.TLabel",
@@ -1289,7 +1289,7 @@ class SettingsWindow:
         self.c_language = Choice(c.frame, LANGUAGES, t.language, width=40)
         c.field(_t("Idioma"), lambda _: self.c_language.widget,
                 _t("Fixar o idioma deixa o modelo local cerca de 2 s mais rápido por ditado."))
-        models = [(code, label + (" · " + _t("installed ✓") if resolve_model(
+        models = [(code, label + (" · " + _t("instalado ✓") if resolve_model(
             config.TranscriptionCfg(local_model=code), self.paths).is_file() else "")) for code, label in MODELS]
         self.c_model = Choice(c.frame, models, t.local_model, width=max(50, max(len(lbl) for _, lbl in models) + 2))
         c.field(_t("Modelo local"), lambda _: self.c_model.widget,
@@ -1579,7 +1579,7 @@ class SettingsWindow:
                    "Nenhuma correção ainda.\nElas aparecem aqui quando você corrige um ditado.")
 
     def _dict_export(self) -> None:
-        path = filedialog.asksaveasfilename(parent=self.top, title="Exportar dicionário",
+        path = filedialog.asksaveasfilename(parent=self.top, title=_t("Exportar dicionário"),
                                             defaultextension=".json", initialfile="bira-flow-dicionario.json",
                                             filetypes=[("Dicionário do Bira Flow", "*.json")])
         if not path:
@@ -1596,7 +1596,7 @@ class SettingsWindow:
         self.l_backup.configure(text=_t('Exportado ✓ ({0} correções, {1} snippets)').format(len(data['replacements']), len(data['snippets'])), style="CardOk.TLabel")
 
     def _dict_import(self) -> None:
-        path = filedialog.askopenfilename(parent=self.top, title="Importar dicionário",
+        path = filedialog.askopenfilename(parent=self.top, title=_t("Importar dicionário"),
                                           filetypes=[("Dicionário do Bira Flow", "*.json")])
         if not path:
             return
@@ -1646,7 +1646,7 @@ class SettingsWindow:
         if image is None:
             from PIL import Image
 
-            path = filedialog.askopenfilename(parent=self.top, title="Escolha o print com a correção",
+            path = filedialog.askopenfilename(parent=self.top, title=_t("Escolha o print com a correção"),
                                               filetypes=[("Imagens", "*.png *.jpg *.jpeg *.bmp *.webp *.gif"),
                                                          ("Todos os arquivos", "*.*")])
             if not path:
@@ -1811,7 +1811,7 @@ class SettingsWindow:
         spoken_send = i18n.spoken_list("send")
         c.field(_t("Frases"), lambda f: ttk.Entry(f, textvariable=self.v_send_phrases, width=50),
                 _t("Separadas por vírgula. Use frases que você não falaria no fim de um texto comum.")
-                + (f" Neste idioma, o app também entende: {', '.join(spoken_send)}." if spoken_send else ""),
+                + (_t(' Neste idioma, o app também entende: {0}.').format(', '.join(spoken_send)) if spoken_send else ""),
                 sticky="ew")
 
         c = p.card(_t("Área de transferência"))
@@ -1933,7 +1933,7 @@ class SettingsWindow:
             self.t_hist_detail.configure(state="disabled")
 
     def _history_export(self) -> None:
-        path = filedialog.asksaveasfilename(parent=self.top, title="Exportar histórico", defaultextension=".txt",
+        path = filedialog.asksaveasfilename(parent=self.top, title=_t("Exportar histórico"), defaultextension=".txt",
                                             initialfile="bira-flow-historico.txt",
                                             filetypes=[("Texto", "*.txt"), ("Planilha (CSV)", "*.csv")])
         if not path:
@@ -2040,9 +2040,9 @@ class SettingsWindow:
                 self.e_keys.append(e)
                 return e
 
-            hint = _t("Create it at {0}.").format(where)
+            hint = _t("Crie em {0}.").format(where)
             if self.env_all.get(key) and not self.env_user.get(key):
-                hint += " " + _t("Already set outside this file (environment variable or the project .env).")
+                hint += " " + _t("Já definida fora deste arquivo (variável de ambiente ou .env do projeto).")
             c.field(_t(name), make, sticky="ew")
             self.l_key_status = getattr(self, "l_key_status", {})
             self.l_key_status[key] = c._help(hint)
