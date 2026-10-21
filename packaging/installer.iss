@@ -35,12 +35,16 @@ SolidCompression=yes
 ; the running app holds its own files open: close it (updates also quit it themselves)
 CloseApplications=force
 RestartApplications=no
+#ifndef NoSign
 SignTool=bfsign
 SignedUninstaller=yes
+#endif
 
 [Languages]
-; English first: it is the default for every system that is not Portuguese
-Name: "en"; MessagesFile: "compiler:Default.isl"
+; "default" (English) first: it is the language of every system that is not Portuguese.
+; The name has to be "default": that is the language the [Messages] entries without a
+; prefix belong to, and the custom messages ({cm:...}) are looked up there.
+Name: "default"; MessagesFile: "compiler:Default.isl"
 Name: "pt"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Tasks]
@@ -92,11 +96,15 @@ begin
 end;
 
 [Messages]
-en.TaskAutoStart=Start Bira Flow with Windows
-en.TaskDesktopIcon=Create a shortcut on the desktop
-en.RunOpen=Open Bira Flow
-en.FinishedLabel=Bira Flow is installed. Hold Ctrl+Win and speak to dictate in any app.%n%nYour settings, keys and models stay in %APPDATA%\BiraFlow and %LOCALAPPDATA%\BiraFlow and are kept when you uninstall.
+; the base entries belong to the default language (English)
+FinishedLabel=Bira Flow is installed. Hold Ctrl+Win and speak to dictate in any app.%n%nYour settings, keys and models stay in %APPDATA%\BiraFlow and %LOCALAPPDATA%\BiraFlow and are kept when you uninstall.
+pt.FinishedLabel=O Bira Flow foi instalado. Segure Ctrl+Win e fale para ditar em qualquer aplicativo.%n%nSuas configurações, chaves e modelos ficam em %APPDATA%\BiraFlow e %LOCALAPPDATA%\BiraFlow e são mantidos ao desinstalar.
+
+[CustomMessages]
+; the texts of the installer that are not standard: each language has its own
+TaskAutoStart=Start Bira Flow with Windows
+TaskDesktopIcon=Create a shortcut on the desktop
+RunOpen=Open Bira Flow
 pt.TaskAutoStart=Iniciar o Bira Flow junto com o Windows
 pt.TaskDesktopIcon=Criar um atalho na área de trabalho
 pt.RunOpen=Abrir o Bira Flow
-pt.FinishedLabel=O Bira Flow foi instalado. Segure Ctrl+Win e fale para ditar em qualquer aplicativo.%n%nSuas configurações, chaves e modelos ficam em %APPDATA%\BiraFlow e %LOCALAPPDATA%\BiraFlow e são mantidos ao desinstalar.

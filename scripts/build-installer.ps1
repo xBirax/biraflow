@@ -90,7 +90,7 @@ Write-Host "Gerando o instalador com o Inno Setup..."
 if ($signCmd) {
     & $iscc /Q "/DAppVersion=$version" "/S$signCmd" "packaging\installer.iss"
 } else {
-    & $iscc /Q "/DAppVersion=$version" "packaging\installer.iss"
+    & $iscc /Q "/DAppVersion=$version" "/DNoSign" "packaging\installer.iss"
 }
 if ($LASTEXITCODE -ne 0) { throw "Inno Setup falhou" }
 
