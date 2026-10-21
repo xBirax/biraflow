@@ -1,14 +1,14 @@
 ﻿<#
 .SYNOPSIS
-  Cria o certificado de assinatura de código do Bira Flow (gratuito, autoassinado).
+  Creates the Bira Flow code-signing certificate (free, self-signed).
 
-  Gera, uma única vez:
-    packaging\signing\biraflow-codesign.pfx   chave privada (NÃO compartilhe; fora do git)
-    packaging\signing\pfx-password.txt        senha aleatória do .pfx (fora do git)
-    packaging\biraflow-codesign.cer           certificado público (pode compartilhar)
+  Generates, once:
+    packaging\signing\biraflow-codesign.pfx   the private key (DO NOT share it; outside git)
+    packaging\signing\pfx-password.txt        a random password for the .pfx (outside git)
+    packaging\biraflow-codesign.cer           the public certificate (safe to share)
 
-  Guarde uma cópia do .pfx e da senha: as atualizações automáticas só aceitam instaladores
-  assinados com ESTE certificado. Se ele se perder, será preciso reinstalar manualmente.
+  Keep a copy of the .pfx and of the password: the automatic updates only accept installers
+  signed with THIS certificate. If it is lost, users have to install by hand.
 #>
 param([switch]$Force)
 $ErrorActionPreference = "Stop"
@@ -18,13 +18,13 @@ $pfx = Join-Path $dir "biraflow-codesign.pfx"
 $pwdFile = Join-Path $dir "pfx-password.txt"
 $cer = Join-Path $root "packaging\biraflow-codesign.cer"
 if ((Test-Path $pfx) -and -not $Force) {
-    Write-Host "Certificado já existe: $pfx  (use -Force para criar outro; as atualizações deixam de reconhecer o antigo)"
+    Write-Host "Certificate already exists: $pfx  (use -Force to create another one; the updates stop recognising the old)"
     exit 0
 }
 New-Item -ItemType Directory -Force $dir | Out-Null
 
 $cert = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=Bira Flow" `
-    -FriendlyName "Bira Flow - assinatura de código" -KeyAlgorithm RSA -KeyLength 3072 `
+    -FriendlyName "Bira Flow - code signing" -KeyAlgorithm RSA -KeyLength 3072 `
     -HashAlgorithm SHA256 -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears(10) `
     -CertStoreLocation Cert:\CurrentUser\My
 
@@ -36,6 +36,7 @@ Export-PfxCertificate -Cert $cert -FilePath $pfx -Password (ConvertTo-SecureStri
 Export-Certificate -Cert $cert -FilePath $cer | Out-Null
 Remove-Item -Path ("Cert:\CurrentUser\My\" + $cert.Thumbprint)  # the .pfx is the only copy of the key
 
-Write-Host "Certificado criado. Impressão digital: $($cert.Thumbprint)"
-Write-Host "Chave privada: $pfx (faça backup dela e de $pwdFile)"
-Write-Host "Para o Windows confiar nele neste PC: scripts\trust-signing-cert.ps1 (pelo Win+R)."
+Write-Host "Certificate created. Thumbprint: $($cert.Thumbprint)"
+Write-Host "Private key: $pfx (back it up, and $pwdFile too)"
+Write-Host "For Windows to trust it on this PC: scripts\trust-signing-cert.ps1 (through Win+R)."
+

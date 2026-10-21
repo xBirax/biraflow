@@ -12,7 +12,7 @@ AppName=Bira Flow
 AppVersion={#AppVersion}
 AppVerName=Bira Flow {#AppVersion}
 AppPublisher=Bira Flow
-AppComments=Ditado por voz em qualquer aplicativo
+AppComments=Voice dictation for every app
 VersionInfoVersion={#AppVersion}
 VersionInfoProductName=Bira Flow
 DefaultDirName={localappdata}\Programs\Bira Flow
@@ -39,11 +39,13 @@ SignTool=bfsign
 SignedUninstaller=yes
 
 [Languages]
+; English first: it is the default for every system that is not Portuguese
+Name: "en"; MessagesFile: "compiler:Default.isl"
 Name: "pt"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Tasks]
-Name: "autostart"; Description: "Iniciar o Bira Flow junto com o Windows"
-Name: "desktopicon"; Description: "Criar um atalho na área de trabalho"; Flags: unchecked
+Name: "autostart"; Description: "{cm:TaskAutoStart}"
+Name: "desktopicon"; Description: "{cm:TaskDesktopIcon}"; Flags: unchecked
 
 [Files]
 Source: "..\dist\BiraFlow\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
@@ -54,10 +56,10 @@ Type: filesandordirs; Name: "{app}\_internal"
 
 [Icons]
 ; same AppUserModelID as the running app: its taskbar button and pins use this shortcut's icon
-Name: "{userprograms}\Bira Flow"; Filename: "{app}\biraflow.exe"; Comment: "Ditado por voz em qualquer aplicativo"; AppUserModelID: "BiraFlow.Dictation"
+Name: "{userprograms}\Bira Flow"; Filename: "{app}\biraflow.exe"; Comment: "Voice dictation for every app"; AppUserModelID: "BiraFlow.Dictation"
 Name: "{userdesktop}\Bira Flow"; Filename: "{app}\biraflow.exe"; Tasks: desktopicon; AppUserModelID: "BiraFlow.Dictation"
-; right-click an audio file -> Enviar para -> Bira Flow: opens it in "Transcrever áudio"
-Name: "{usersendto}\Bira Flow (transcrever áudio)"; Filename: "{app}\biraflow.exe"
+; right-click an audio file -> Send to -> Bira Flow: opens it in "Transcribe audio"
+Name: "{usersendto}\Bira Flow (transcribe audio)"; Filename: "{app}\biraflow.exe"
 
 [Registry]
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "BiraFlow"; ValueData: """{app}\biraflow.exe"""; Tasks: autostart; Flags: uninsdeletevalue
@@ -66,7 +68,7 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 ; refresh Windows' icon cache so an already pinned taskbar button shows the new icon
 Filename: "{sys}\ie4uinit.exe"; Parameters: "-show"; Flags: runhidden nowait skipifdoesntexist
 ; interactive install: offer to open it; update made by the app (/RELAUNCH=1): reopen it
-Filename: "{app}\biraflow.exe"; Description: "Abrir o Bira Flow"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\biraflow.exe"; Description: "{cm:RunOpen}"; Flags: nowait postinstall skipifsilent
 Filename: "{app}\biraflow.exe"; Flags: nowait runasoriginaluser; Check: RelaunchAfterUpdate
 
 [UninstallRun]
@@ -90,4 +92,11 @@ begin
 end;
 
 [Messages]
+en.TaskAutoStart=Start Bira Flow with Windows
+en.TaskDesktopIcon=Create a shortcut on the desktop
+en.RunOpen=Open Bira Flow
+en.FinishedLabel=Bira Flow is installed. Hold Ctrl+Win and speak to dictate in any app.%n%nYour settings, keys and models stay in %APPDATA%\BiraFlow and %LOCALAPPDATA%\BiraFlow and are kept when you uninstall.
+pt.TaskAutoStart=Iniciar o Bira Flow junto com o Windows
+pt.TaskDesktopIcon=Criar um atalho na área de trabalho
+pt.RunOpen=Abrir o Bira Flow
 pt.FinishedLabel=O Bira Flow foi instalado. Segure Ctrl+Win e fale para ditar em qualquer aplicativo.%n%nSuas configurações, chaves e modelos ficam em %APPDATA%\BiraFlow e %LOCALAPPDATA%\BiraFlow e são mantidos ao desinstalar.

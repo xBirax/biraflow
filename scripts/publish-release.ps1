@@ -1,9 +1,9 @@
 ﻿<#
 .SYNOPSIS
-  Publica o instalador gerado por build-installer.ps1 nos Releases do GitHub. Os apps
-  instalados encontram a nova versão em até 6 horas (ou em "Verificar agora") e se atualizam.
+  Publishes the installer built by build-installer.ps1 on the GitHub Releases. The installed
+  apps find the new version within 6 hours (or in "Check now") and update themselves.
 .EXAMPLE
-  powershell -ExecutionPolicy Bypass -File scripts\publish-release.ps1 -Notes "Correções e melhorias"
+  powershell -ExecutionPolicy Bypass -File scripts\publish-release.ps1 -Notes "Fixes and improvements"
 #>
 param([string]$Notes = "")
 $ErrorActionPreference = "Stop"
@@ -13,10 +13,10 @@ $repo = (Get-Content "packaging\release.json" -Raw | ConvertFrom-Json).repo
 $manifest = Get-Content "dist\latest.json" -Raw | ConvertFrom-Json
 $version = $manifest.version
 $setup = "dist\BiraFlow-Setup-$version.exe"
-if (-not (Test-Path $setup)) { throw "Instalador não encontrado: $setup (rode build-installer.ps1)" }
-if ((Get-FileHash $setup -Algorithm SHA256).Hash.ToLower() -ne $manifest.sha256) { throw "latest.json não confere com $setup" }
+if (-not (Test-Path $setup)) { throw "Installer not found: $setup (run build-installer.ps1)" }
+if ((Get-FileHash $setup -Algorithm SHA256).Hash.ToLower() -ne $manifest.sha256) { throw "latest.json does not match $setup" }
 if (-not $Notes) { $Notes = if ($manifest.notes) { $manifest.notes } else { "Bira Flow $version" } }
 
 gh release create "v$version" $setup "dist\latest.json" --repo $repo --title "Bira Flow $version" --notes $Notes
-if ($LASTEXITCODE -ne 0) { throw "gh release create falhou" }
-Write-Host "Publicado: https://github.com/$repo/releases/tag/v$version"
+if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
+Write-Host "Published: https://github.com/$repo/releases/tag/v$version"

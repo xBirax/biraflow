@@ -43,6 +43,8 @@ def _window(tmp_path, monkeypatch, root, layout: bool, **kw):
     app.open_data_folder = app.open_log = app.open_readme = lambda *a: None
     app.applied = []
     app.apply_settings = lambda *a: app.applied.append(a)
+    app.reopened = 0
+    app.show_settings = lambda *a: setattr(app, "reopened", app.reopened + 1)
     app.state = {}
     w = settings_ui.SettingsWindow(app, background=True, layout=layout, **kw)
     yield w, app, paths, root
@@ -104,6 +106,22 @@ def test_changes_are_detected_and_saved(ui):
     w.save()
     settings = app.applied[0][0]
     assert settings.ui.sounds is not app.controller.settings.ui.sounds
+
+
+def test_the_language_picker_reopens_the_window_in_the_new_language(ui):
+    """Changing the language is the one setting that needs the window to be rebuilt."""
+    from biraflow import i18n
+
+    w, app, *_ = ui
+    w.show("general")
+    assert w.c_language.get() == "auto"
+    w.c_language.var.set("English")      # what the user picks in the drop-down
+    assert w.c_language.get() == "en"
+    w.save()
+    assert app.applied[0][0].ui.language == "en"
+    assert app.reopened == 1
+    assert i18n.language() == "en"
+    i18n.set_language("pt-BR")     # the other tests expect the source language
 
 
 def test_hotkey_shows_keycaps(ui):

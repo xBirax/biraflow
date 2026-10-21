@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
-  Assina um arquivo (.exe) com o certificado do Bira Flow, com carimbo de tempo.
-  Usado por build-installer.ps1 e pelo Inno Setup (SignTool).
+  Signs a file (.exe) with the Bira Flow certificate, with a timestamp.
+  Used by build-installer.ps1 and by Inno Setup (SignTool).
 #>
 param([Parameter(Mandatory)][string]$Path)
 $ErrorActionPreference = "Stop"
@@ -18,7 +18,7 @@ foreach ($ts in "http://timestamp.digicert.com", "http://timestamp.sectigo.com",
 }
 $check = Get-AuthenticodeSignature -FilePath $Path
 if (-not $check.SignerCertificate -or $check.SignerCertificate.Thumbprint -ne $cert.Thumbprint) {
-    Write-Error "Falha ao assinar $Path ($($check.Status))"
+    Write-Error "Could not sign $Path ($($check.Status))"
     exit 1
 }
-Write-Host ("Assinado: {0} ({1}, carimbo: {2})" -f (Split-Path $Path -Leaf), $check.Status, [bool]$check.TimeStamperCertificate)
+Write-Host ("Signed: {0} ({1}, timestamp: {2})" -f (Split-Path $Path -Leaf), $check.Status, [bool]$check.TimeStamperCertificate)

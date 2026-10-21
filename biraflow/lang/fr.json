@@ -1,0 +1,601 @@
+{
+ "code": "fr",
+ "name": "Français",
+ "prompts": {
+  "command": "Vous êtes un assistant d'écriture contrôlé par la voix. L'utilisateur a peut-être sélectionné du texte avant d'énoncer une consigne.\n- Si du texte est sélectionné, appliquez-lui la consigne (réécrire, raccourcir, traduire, corriger, changer le ton, transformer en liste...) et renvoyez uniquement le résultat, qui remplacera la sélection.\n- Si aucun texte n'est sélectionné, rédigez ce que demande la consigne, prêt à être inséré au niveau du curseur.\n- Répondez dans la langue du texte sélectionné, ou dans celle de la consigne si rien n'est sélectionné, sauf demande contraire dans la consigne.\nRenvoyez uniquement le texte final : sans guillemets, sans explications, sans balises de code markdown.",
+  "meeting": "Vous recevez la transcription d'une réunion avec les étiquettes \"Moi\" et \"Participants\" et l'horodatage [hh:mm:ss].\nL'étiquette \"Salle\" correspond à une réunion en présentiel enregistrée avec un seul micro : l'intervenant n'est pas identifié ; comme\nresponsable, utilisez uniquement un nom mentionné dans l'intervention, sinon \"à définir\".\nRédigez dans la langue de la transcription, exactement selon cette structure (Markdown). Les titres ## restent\nexactement comme ci-dessous, en français, même si la réunion est dans une autre langue :\n# <titre court de la réunion>\n## Résumé\n3 à 6 phrases.\n## Décisions\nPuces ; uniquement ce qui a été effectivement décidé, chacune avec l'horodatage [hh:mm:ss].\n## Prochaines étapes\n\"- [ ] responsable — tâche — échéance\" (\"sans échéance\" si aucune).\n## Points en suspens\nQuestions sans réponse, points en suspens.\nN'inventez jamais de noms, dates, valeurs ou tâches. Section sans contenu : \"Aucun.\".",
+  "meeting_merge": "Vous recevez des notes partielles d'extraits consécutifs d'une même réunion, chacune comportant un titre, un Résumé, les Décisions, les Prochaines étapes et les Points en suspens.\nFusionnez-les en une seule note, dans leur langue, en respectant exactement cette structure (Markdown), avec les titres ##\nexactement comme ci-dessous, en français :\n# <un titre court pour l'ensemble de la réunion>\n## Résumé\n3 à 6 phrases sur l'ensemble de la réunion.\n## Décisions\n## Prochaines étapes\n## Points en suspens\nSupprimez les répétitions, conservez les horodatages [hh:mm:ss] et le format \"- [ ] responsable — tâche — échéance\".\nUn point en suspens résolu dans un extrait ultérieur est retiré de \"Points en suspens\". N'inventez jamais rien. Section sans contenu : \"Aucun.\".",
+  "style:casual": "Ton pour cette application : discussion décontractée. Restez naturel et fluide ; évitez le style formel.",
+  "style:email": "Ce texte est destiné à un e-mail. Conservez chaque mot dicté dans son ordre d'origine et contentez-vous de le mettre en page :\n1. Une formule de salutation ou le nom du destinataire au début (\"oi ana tudo bem\", \"pessoal boa tarde\", \"carlos\") se place seul sur la première ligne, suivi d'une ligne vide.\n2. Le reste est réparti en courts paragraphes d'une à trois phrases complètes, avec une ligne vide entre chaque paragraphe. Ne transformez jamais un fragment de phrase en une phrase distincte.\n3. Une énumération d'au moins trois éléments au sein d'une même phrase peut être présentée à raison d'un élément par ligne, chacun commençant par \"- \", sans ligne vide entre eux.\n4. Une formule de politesse finale dictée (\"obrigado\", \"fico no aguardo\") se place sur sa propre ligne après une ligne vide.\n5. Omettez la signature finale dictée (\"att bira\", \"atenciosamente, Ana\") : l'application de messagerie ajoute automatiquement la signature.\nN'ajoutez jamais de formule de salutation, formule de politesse finale, signature, nom, variable ou objet qui n'a pas été dicté.\nExemple. Dictée : \"oi joão tudo bem vou chegar atrasado na reunião de amanhã porque tenho médico cedo obrigado att bia\"\nRésultat :\nOi João, tudo bem?\n\nVou chegar atrasado na reunião de amanhã porque tenho médico cedo.\n\nObrigado!",
+  "style:formal": "Ton pour cette application : formel et soigné, comme un e-mail professionnel. Phrases complètes, ponctuation soignée. N'ajoutez pas de salutations, de formules de politesse ou de contenu qui n'a pas été prononcé.",
+  "style:technical": "Ce texte est destiné à un éditeur de code ou à un terminal : conservez les identifiants, noms de fichiers, commandes, options, chemins et symboles exactement tels qu'ils sont prononcés (snake_case, camelCase, tirets) ; n'ajoutez pas de point final aux commandes.",
+  "style:very_casual": "ton pour cette appli : discussion très informelle. court et décontracté : minuscule au début et pas de point final, ça passe très bien. sans emojis.",
+  "summary": "Vous résumez des messages vocaux transcrits (messages vocaux WhatsApp, appels, réunions).\nRédigez dans la langue de la transcription (portugais brésilien pour le portugais).\n- Première ligne : le sujet principal en une phrase courte.\n- Ensuite, les points importants sous forme de puces courtes (\"• \"), en conservant les dates, les heures, les montants, les noms et les demandes.\n- Si l'intervenant demande quelque chose ou attend une réponse, terminez par une ligne commençant par \"Ação:\" indiquant quoi.\nN'ajoutez jamais rien qui ne figure pas dans la transcription. Pas de titres Markdown, pas de gras."
+ },
+ "spoken": {
+  "at": [
+   "arobase"
+  ],
+  "cancel": [
+   "annuler la dictée"
+  ],
+  "close_bracket": [
+   "fermer les crochets",
+   "ferme les crochets",
+   "crochet fermant"
+  ],
+  "close_paren": [
+   "point d'exclamation"
+  ],
+  "close_quote": [
+   "fermer les guillemets",
+   "ferme les guillemets"
+  ],
+  "comma": [
+   "point d'interrogation"
+  ],
+  "dot": [
+   "point"
+  ],
+  "dot_final": [
+   "point final"
+  ],
+  "ellipsis": [
+   "points de suspension",
+   "trois points"
+  ],
+  "em_dash": [
+   "tiret cadratin",
+   "tiret long"
+  ],
+  "emoji:abraço": [
+   "câlin"
+  ],
+  "emoji:aceno": [
+   "coucou"
+  ],
+  "emoji:apaixonado": [
+   "amoureux"
+  ],
+  "emoji:assustado": [
+   "effrayé"
+  ],
+  "emoji:beijo": [
+   "bisou"
+  ],
+  "emoji:bolo": [
+   "gâteau"
+  ],
+  "emoji:bravo": [
+   "en colère"
+  ],
+  "emoji:café": [
+   "café"
+  ],
+  "emoji:carinha feliz": [
+   "de "
+  ],
+  "emoji:cem": [
+   "cent"
+  ],
+  "emoji:certo": [
+   "validé"
+  ],
+  "emoji:cerveja": [
+   "bière"
+  ],
+  "emoji:check": [
+   "check"
+  ],
+  "emoji:chorando": [
+   "pleure"
+  ],
+  "emoji:chorando de rir": [
+   "sourire"
+  ],
+  "emoji:coração": [
+   "appuyer sur entrée"
+  ],
+  "emoji:coração partido": [
+   "touche entrée"
+  ],
+  "emoji:dinheiro": [
+   "argent"
+  ],
+  "emoji:errado": [
+   "faux"
+  ],
+  "emoji:estrela": [
+   "étoile"
+  ],
+  "emoji:festa": [
+   "fête"
+  ],
+  "emoji:flor": [
+   "fleur"
+  ],
+  "emoji:fogo": [
+   "feu"
+  ],
+  "emoji:foguete": [
+   "fusée"
+  ],
+  "emoji:força": [
+   "force"
+  ],
+  "emoji:joinha": [
+   "pouce"
+  ],
+  "emoji:mãos juntas": [
+   "mains jointes"
+  ],
+  "emoji:músculo": [
+   "muscle"
+  ],
+  "emoji:negativo": [
+   "négatif"
+  ],
+  "emoji:obrigado": [
+   "merci"
+  ],
+  "emoji:ok": [
+   "ok"
+  ],
+  "emoji:olhos": [
+   "yeux"
+  ],
+  "emoji:palmas": [
+   "applaudissements"
+  ],
+  "emoji:pensando": [
+   "pensif"
+  ],
+  "emoji:piscadinha": [
+   "clin d'œil"
+  ],
+  "emoji:positivo": [
+   "positif"
+  ],
+  "emoji:presente": [
+   "cadeau"
+  ],
+  "emoji:revirando os olhos": [
+   "yeux au ciel"
+  ],
+  "emoji:rezando": [
+   "prière"
+  ],
+  "emoji:rindo": [
+   "cœur brisé"
+  ],
+  "emoji:risada": [
+   "cœur"
+  ],
+  "emoji:sol": [
+   "soleil"
+  ],
+  "emoji:sorriso": [
+   "entrée"
+  ],
+  "emoji:surpreso": [
+   "surpris"
+  ],
+  "emoji:tchau": [
+   "salut"
+  ],
+  "emoji:triste": [
+   "triste"
+  ],
+  "emoji:óculos escuros": [
+   "lunettes de soleil"
+  ],
+  "emoji_of": [
+   "bien cordialement"
+  ],
+  "exclamation": [
+   "ligne suivante"
+  ],
+  "new_line": [
+   "nouveau paragraphe"
+  ],
+  "new_paragraph": [
+   "nouveau paragraphe"
+  ],
+  "open_bracket": [
+   "ouvrir les crochets",
+   "ouvre les crochets",
+   "crochet ouvrant"
+  ],
+  "open_paren": [
+   "point d'interrogation"
+  ],
+  "open_quote": [
+   "point d'exclamation"
+  ],
+  "period": [
+   "ligne suivante"
+  ],
+  "question": [
+   "à la ligne"
+  ],
+  "semicolon": [
+   "nouvelle ligne"
+  ],
+  "send": [
+   "cordialement"
+  ],
+  "sign_off": [
+   "cdlt"
+  ],
+  "undo": [
+   "effacer la dernière dictée"
+  ]
+ },
+ "strings": {
+  "\n\nAs configurações e o modelo em uso (BiraFlow) não são afetados.": "\n\nLes paramètres et le modèle en cours d'utilisation (BiraFlow) ne sont pas affectés.",
+  " Encerre pelo ícone da bandeja.": " Terminez depuis l'icône de la zone de notification.",
+  " e o áudio do PC.": " et l'audio du PC.",
+  "+": "+",
+  ", ": ", ",
+  ".": ".",
+  "0 = automático.": "0 = automatique.",
+  "; ": "; ",
+  "A mudança vale ao salvar as configurações.": "La modification s'applique lors de l'enregistrement des paramètres.",
+  "Abaixo deste volume a gravação conta como silêncio e não é transcrita. 0 desliga.": "Sous ce volume, le son est considéré comme du silence et n'est pas transcrit. Définir à 0 pour désactiver.",
+  "Abre o Bira Flow na bandeja ao entrar na sua conta.": "Ouvre Bira Flow dans la zone de notification à l'ouverture de session.",
+  "Abrir README": "Ouvrir le README",
+  "Abrir arquivo avançado…": "Ouvrir le fichier avancé…",
+  "Abrir log": "Ouvrir les logs",
+  "Abrir pasta": "Ouvrir le dossier",
+  "Abrir pasta das reuniões": "Ouvrir le dossier des réunions",
+  "Abrir pasta de dados": "Ouvrir le dossier de données",
+  "Abrir privacidade do microfone": "Ouvrir les paramètres de confidentialité du microphone",
+  "Abrir reuniões…": "Ouvrir les réunions…",
+  "Adaptar o estilo ao aplicativo": "Adapter le style à l'application",
+  "Adicionar": "Ajouter",
+  "Aguarde: a reunião está iniciando ou encerrando.": "Veuillez patienter : la réunion démarre ou se termine.",
+  "Ajuda quando você fala baixinho ou longe do microfone. Nunca reduz o volume.": "Pratique si vous parlez doucement ou loin du microphone. Ne réduit jamais le volume.",
+  "Alguns terminais preferem shift+insert.": "Certains terminaux préfèrent shift+insert.",
+  "Ao corrigir um ditado na página Histórico, as palavras trocadas viram correções.": "Lorsque vous corrigez une dictée sur la page Historique, les mots modifiés deviennent des règles de correction.",
+  "Apagar definitivamente as pastas antigas do Whisperflow?\n\n": "Supprimer définitivement les anciens dossiers de Whisperflow ?\n\n",
+  "Apagar pastas antigas": "Supprimer les anciens dossiers",
+  "Apagar todo o histórico de ditados?": "Supprimer tout l'historique des dictées ?",
+  "Apertar Enter quando o ditado terminar com uma frase de envio": "Appuyer sur Enter lorsque la dictée se termine par une phrase d'envoi",
+  "Apertar e soltar mais rápido que isto conta como toque, não como segurar.": "Appuyer et relâcher plus vite que ceci compte comme un simple appui, pas comme un maintien.",
+  "App": "App",
+  "Apps ignorados": "Applications ignorées",
+  "Aprender com as correções do Histórico": "Apprendre des corrections de l'historique",
+  "Aprender com o print copiado": "Apprendre à partir de la capture copiée",
+  "Aprender com um print": "Apprendre depuis une capture d'écran",
+  "Aprender quando eu corrijo o texto onde ele foi colado": "Apprendre lorsque je corrige le texte là où il a été collé",
+  "Aprendido: ": "Appris : ",
+  "Aprendizado desfeito: ": "Apprentissage annulé : ",
+  "Arquivo inválido: {0}": "Fichier non valide : {0}",
+  "As chaves ficam só neste computador, em {0}, e são enviadas apenas ao respectivo provedor. O Bira Flow não tem contas nem telemetria.": "Les clés restent uniquement sur cet ordinateur, dans {0}, et ne sont envoyées qu'au fournisseur concerné. Bira Flow ne comporte aucun compte ni télémétrie.",
+  "Assim fica o texto inserido depois de cada ditado.": "Voici comment apparaît le texte inséré après chaque dictée.",
+  "Atalho: {0}": "Raccourci : {0}",
+  "Atalhos": "Raccourcis",
+  "Atalhos de voz: diga o gatilho em qualquer ponto do ditado e ele vira o texto salvo. Ditar só o gatilho insere só o texto.": "Raccourcis vocaux : prononcez le mot déclencheur à n'importe quel moment de la dictée et il sera remplacé par le texte enregistré. Dicter uniquement le déclencheur insère seulement le texte.",
+  "Ativado": "Activé",
+  "Ativar ditado por voz": "Activer la dictée vocale",
+  "Ativação por voz": "Activation vocale",
+  "Atualizar automaticamente": "Mettre à jour automatiquement",
+  "Atualizações": "Mises à jour",
+  "Atualizações indisponíveis aqui.": "Mises à jour indisponibles ici.",
+  "Aumentar o volume de falas baixas": "Amplifier les voix faibles",
+  "Avançado": "Avancé",
+  "Avise os participantes antes de gravar: gravar alguém sem consentimento pode violar a LGPD e as regras da sua empresa. A transcrição usa o motor escolhido em Transcrição.": "Prévenez les participants avant d'enregistrer : enregistrer quelqu'un sans son consentement peut enfreindre le RGPD et les règles de votre entreprise. La transcription utilise le moteur choisi dans Transcription.",
+  "Baixando {0}: {1:.0f} de {2:.0f} MB": "Téléchargement de {0} : {1:.0f} sur {2:.0f} Mo",
+  "Baixando… {0:.0f} MB": "Téléchargement… {0:.0f} Mo",
+  "Baixar de novo": "Télécharger à nouveau",
+  "Baixar modelo de voz ({0} MB)": "Télécharger le modèle vocal ({0} Mo)",
+  "Baixar o modelo escolhido": "Télécharger le modèle sélectionné",
+  "Bira Flow": "Bira Flow",
+  "Bira Flow atualizado para a versão {0}": "Bira Flow mis à jour vers la version {0}",
+  "Bira Flow pronto · segure {0}": "Bira Flow prêt · maintenez {0}",
+  "Bira Flow: pausado até {0}": "Bira Flow : en pause jusqu'à {0}",
+  "Bloquear teclas comuns dos atalhos": "Bloquer les touches de raccourci standard",
+  "Buscar": "Rechercher",
+  "Cancela a gravação ou a transcrição em andamento.": "Annule l'enregistrement ou la transcription en cours.",
+  "Cancelado": "Annulé",
+  "Cancelar": "Annuler",
+  "Cerca de 21 MB por hora. Desligado: o áudio é apagado depois de transcrito.": "Environ 21 Mo par heure. Désactivé : l'audio est supprimé après la transcription.",
+  "Chave {0}": "Clé {0}",
+  "Chaves de API": "Clés API",
+  "Clique em Gravar e pressione a combinação. A tecla Fn não chega ao Windows.": "Cliquez sur Enregistrer et appuyez sur la combinaison. La touche Fn n'est pas transmise à Windows.",
+  "Cola de novo o último ditado.": "Colle à nouveau la dernière dictée.",
+  "Colar de novo": "Coller à nouveau",
+  "Colar último ditado": "Coller la dernière dictée",
+  "Colar último ditado ({0})": "Coller la dernière dictée ({0})",
+  "Com isto ligado, o microfone fica aberto e o ícone de microfone do Windows aparece aceso. Um detector local, no seu PC, procura só a frase. Nada é gravado ou enviado até ele ouvi-la.": "Lorsque cette option est activée, le micro reste actif et l'icône de micro de Windows s'allume. Un détecteur local sur votre PC écoute uniquement cette phrase. Rien n'est enregistré ni envoyé tant qu'elle n'a pas été détectée.",
+  "Com o whisper.cpp para NVIDIA, cada ditado leva ~0,3 s em vez de ~1–3 s. Usa ~500 MB de memória de vídeo; quando ele é só a reserva da nuvem, sai da memória após 10 min sem uso. Sem placa NVIDIA, não tem efeito.": "Avec whisper.cpp pour NVIDIA, chaque dictée prend ~0,3 s au lieu de ~1–3 s. Utilise ~500 Mo de mémoire vidéo ; s'il ne sert que de secours au cloud, il est libéré après 10 min d'inactivité. Sans carte NVIDIA, cette option n'a aucun effet.",
+  "Como a fala vira texto.": "Conversion de la parole en texte.",
+  "Como o texto chega ao aplicativo em que você está digitando.": "La manière dont le texte est transmis à l'application dans laquelle vous écrivez.",
+  "Como usar": "Guide d'utilisation",
+  "Comportamento": "Comportement",
+  "Configurações aplicadas": "Paramètres appliqués",
+  "Configurações, chaves, dicionário e histórico: {0}\nwhisper.cpp, modelos e áudio temporário: {1}": "Paramètres, clés, dictionnaire et historique : {0}\nwhisper.cpp, modèles et audio temporaire : {1}",
+  "Configurações…": "Paramètres…",
+  "Confirmar a frase com o Whisper (recomendado)": "Confirmer la phrase avec Whisper (recommandé)",
+  "Consentimento": "Consentement",
+  "Copiado para a área de transferência ✓": "Copié dans le presse-papiers ✓",
+  "Copiar": "Copier",
+  "Copiar ao terminar": "Copier une fois terminé",
+  "Copiar último ditado": "Copier la dernière dictée",
+  "Copie um print primeiro (Win+Shift+S) e tente de novo": "Faites d'abord une capture d'écran (Win+Shift+S) et réessayez",
+  "Correções": "Corrections",
+  "Corrija o texto como deveria ter saído:": "Corrigez le texte tel qu'il aurait dû apparaître :",
+  "Créditos": "Crédits",
+  "Ctrl+S salva · Esc fecha · Ctrl+PgDn troca de página": "Ctrl+S enregistre · Échap ferme · Ctrl+Page suivante change d'onglet",
+  "Cópia de segurança": "Sauvegarde",
+  "Decodificação gulosa e janela do tamanho da fala: ~2,5× mais rápido, mesmo texto em ditados.": "Décodage glouton et fenêtre adaptée à la parole : ~2,5× plus rapide, même résultat de dictée.",
+  "Depois de colar, a pílula mostra o começo do texto por alguns segundos, para você conferir.": "Après le collage, la pastille affiche le début du texte pendant quelques secondes pour vérification.",
+  "Depois de encerrar": "Après l'arrêt",
+  "Desativar": "Désactiver",
+  "Descartar as alterações que não foram salvas?": "Ignorer les modifications non enregistrées ?",
+  "Desfazer aprendizado: ": "Annuler l'apprentissage : ",
+  "Desfazer último aprendizado": "Annuler le dernier apprentissage",
+  "Desligado, os atalhos voltam a funcionar como teclas normais.": "Désactivé, les raccourcis fonctionnent à nouveau comme des touches normales.",
+  "Desligado: o ditado fica na área de transferência para colar de novo. Ligado: o que você tinha copiado volta (texto, imagens, tudo), e o ditado não entra no histórico do Win+V.": "Désactivé : la dictée reste dans le presse-papiers pour être recollée. Activé : votre contenu précédent est restauré (texte, images, tout), et la dictée n'apparaît pas dans l'historique Win+V.",
+  "Dicionário": "Dictionnaire",
+  "Dicionário…": "Dictionnaire…",
+  "Diga a frase de ativação e o ditado começa, sem tocar no teclado, como na Alexa.": "Dites la phrase d'activation pour lancer la dictée sans toucher au clavier, comme avec Alexa.",
+  "Ditado": "Dictée",
+  "Ditado ativado": "Dictée activée",
+  "Ditado cancelado": "Dictée annulée",
+  "Ditado desativado": "Dictée désactivée",
+  "Ditado por voz": "Dictée vocale",
+  "Ditados": "Dictées",
+  "Ditados seguidos não ficam grudados.": "Évite que les dictées successives ne soient collées entre elles.",
+  "Duração de um toque (ms)": "Durée d'une frappe (ms)",
+  "Editar por voz": "Édition vocale",
+  "Em uso: {0} ✓": "En cours d'utilisation : {0} ✓",
+  "Encaixar no texto que já existe": "S'adapter au texte existant",
+  "Encerra qualquer gravação, inclusive no mãos livres, depois deste tempo.": "Arrête tout enregistrement, y compris en mode mains libres, après ce délai.",
+  "Encerrando a reunião antes de sair…": "Clôture de la réunion avant de quitter…",
+  "Encerrando a reunião: transcrevendo o último trecho…": "Fin de la réunion : transcription du dernier extrait…",
+  "Encerrar após silêncio de (s)": "Arrêter après un silence de (s)",
+  "Encerrar reunião (desde {0})": "Terminer la réunion (depuis {0})",
+  "Encerrar sozinho depois de (horas)": "Arrêter automatiquement après (heures)",
+  "Endereço": "Adresse",
+  "Ensine palavras ao reconhecimento e corrija erros que se repetem.": "Enrichissez la reconnaissance de nouveaux mots et corrigez les erreurs récurrentes.",
+  "Enter não enviado: a janela mudou ou havia teclas pressionadas": "Entrée non envoyée : la fenêtre a changé ou des touches étaient enfoncées",
+  "Enviar com a voz": "Envoyer à la voix",
+  "Erro: {0}": "Erreur : {0}",
+  "Esc": "Esc",
+  "Escolha um dos modelos da lista para baixar.": "Choisissez un modèle dans la liste à télécharger.",
+  "Escolher arquivo…": "Choisir un fichier…",
+  "Escrever": "Écrire",
+  "Espaço no final": "Espace à la fin",
+  "Essas correções já estavam no Dicionário": "Ces corrections figuraient déjà dans le dictionnaire",
+  "Estatísticas": "Statistiques",
+  "Estilos": "Styles",
+  "Evita gravar o dia todo se você esquecer a reunião ligada.": "Évite d'enregistrer toute la journée si vous oubliez d'arrêter la réunion.",
+  "Ex.: com CapsLock como atalho, ele não alterna maiúsculas; o Z de Shift+Alt+Z não é digitado. Ctrl, Shift, Alt, Win e Esc nunca são bloqueados.": "Ex. : si Verr.Maj est le raccourci, il n'active pas les majuscules ; le Z de Maj+Alt+Z n'est pas saisi. Ctrl, Maj, Alt, Win et Échap ne sont jamais bloqués.",
+  "Ex.: meu email, minha assinatura, link da agenda.": "Ex. : mon e-mail, ma signature, lien de l'agenda.",
+  "Executando comando…": "Exécution de la commande…",
+  "Exportado ✓ ({0} correções, {1} snippets)": "Exporté ✓ ({0} corrections, {1} snippets)",
+  "Exportar…": "Exporter…",
+  "Fale algo por 3 segundos depois de clicar.": "Parlez pendant 3 secondes après avoir cliqué.",
+  "Falhou: {0}": "Échec : {0}",
+  "Falta baixar o modelo de voz em português ({0} MB, uma vez só).": "Le modèle vocal en portugais doit être téléchargé ({0} Mo, une seule fois).",
+  "Fixar o idioma deixa o modelo local cerca de 2 s mais rápido por ditado.": "Définir la langue accélère le modèle local d'environ 2 s par dictée.",
+  "Frase": "Phrase",
+  "Frase de ativação": "Phrase d'activation",
+  "Frases": "Phrases",
+  "Funcionamento": "Fonctionnement",
+  "Geral": "Général",
+  "Gerar as notas (resumo, decisões, próximos passos)": "Générer les notes (résumé, décisions, prochaines étapes)",
+  "Gerar notas": "Générer des notes",
+  "Grava enquanto estiver pressionado; ao soltar, transcreve e cola onde está o cursor.": "Enregistre tant que la touche est maintenue enfoncée ; transcrit et colle à l'emplacement du curseur dès que vous la relâchez.",
+  "Grava o microfone e o que o PC toca, transcreve aos poucos e guarda tudo numa pasta por reunião.": "Enregistre le micro et le son du PC, transcrit au fur et à mesure et conserve tout dans un dossier par réunion.",
+  "Gravar": "Enregistrer",
+  "Gravar também o áudio do PC": "Enregistrer également le son du PC",
+  "Gravação": "Enregistrement",
+  "Gravação mínima (s)": "Durée minimale d'enregistrement (s)",
+  "Gravações mais curtas são descartadas.": "Les enregistrements plus courts sont ignorés.",
+  "Guardar ditados": "Conserver les dictées",
+  "Guardar o áudio na pasta da reunião": "Conserver l'audio dans le dossier de la réunion",
+  "Histórico": "Historique",
+  "Histórico…": "Historique…",
+  "Hoje: {0} {1}, {2} palavras": "Aujourd'hui : {0} {1}, {2} mots",
+  "Idioma": "Langue",
+  "Idioma da interface": "Langue de l'interface",
+  "Idioma e modelo local": "Langue et modèle local",
+  "Importado ✓ ({0} correções, {1} snippets, {2} palavras). Clique em Salvar para guardar.": "Importé ✓ ({0} corrections, {1} snippets, {2} mots). Cliquez sur Enregistrer pour valider.",
+  "Importar…": "Importer…",
+  "Iniciar com o Windows": "Démarrer avec Windows",
+  "Iniciar reunião": "Démarrer la réunion",
+  "Iniciar reunião presencial": "Démarrer une réunion en présentiel",
+  "Insere novamente o último texto ditado onde está o cursor.": "Insère à nouveau le dernier texte dicté à l'emplacement du curseur.",
+  "Inserir": "Insérer",
+  "Inserção": "Insertion",
+  "Instalar whisper.cpp": "Installer whisper.cpp",
+  "Instalação local": "Installation locale",
+  "Instruções extras": "Instructions supplémentaires",
+  "Intervalo do toque duplo (ms)": "Délai du double appui (ms)",
+  "Já estava no dicionário: ": "Déjà présent dans le dictionnaire : ",
+  "LLM": "LLM",
+  "Lendo o print…": "Lecture de la capture d'écran…",
+  "Leve suas palavras, correções e snippets para outro computador, ou guarde uma cópia.": "Transférez vos mots, corrections et snippets vers un autre ordinateur, ou conservez-en une copie.",
+  "Ligue ou desligue o ditado e ajuste como ele aparece e soa.": "Activez ou désactivez la dictée et ajustez son apparence ainsi que ses sons.",
+  "Limite de silêncio": "Seuil de silence",
+  "Limites": "Limites",
+  "Limpar": "Effacer",
+  "Limpeza local (funciona offline)": "Nettoyage local (fonctionne hors ligne)",
+  "Manter o microfone pronto por 30 s depois de ditar": "Garder le micro prêt pendant 30 s après la dictée",
+  "Manter o modelo carregado na placa de vídeo": "Garder le modèle chargé dans la mémoire vidéo",
+  "Microfone": "Microphone",
+  "Microfone \"{0}\" não encontrado: usando o padrão do Windows": "Microphone \"{0}\" introuvable : utilisation du périphérique par défaut de Windows",
+  "Modelo": "Modèle",
+  "Modelo da Groq": "Modèle Groq",
+  "Modelo da OpenAI": "Modèle OpenAI",
+  "Modelo de voz": "Modèle vocal",
+  "Modelo de voz em português instalado ✓ (Vosk, roda só no seu PC).": "Modèle vocal portugais installé ✓ (Vosk, fonctionne uniquement sur votre PC).",
+  "Modelo do Gateway": "Modèle de la passerelle",
+  "Modelo local": "Modèle local",
+  "Modo comando": "Mode commande",
+  "Modo comando: selecione um texto e diga o que fazer (\"deixe mais formal\", \"traduza\").": "Mode commande : sélectionnez un texte et dites quoi faire (« rendre plus formel », « traduire »).",
+  "Modo mãos livres: grava sem segurar. Um novo toque encerra (parada automática em 5 min).": "Mode mains libres : enregistre sans maintenir. Appuyez à nouveau pour arrêter (arrêt automatique au bout de 5 min).",
+  "Modo rápido": "Mode rapide",
+  "Mostra o modo (Ditando, Mãos livres, Comando), o tempo e o nível do microfone. Nunca rouba o foco.": "Affiche le mode (Dictée, Mains libres, Commande), la durée et le niveau du micro. Ne vole jamais le focus.",
+  "Mostrar a pílula durante a gravação": "Afficher la pastille pendant l'enregistrement",
+  "Mostrar chaves": "Afficher les clés",
+  "Mostrar o texto inserido": "Afficher le texte inséré",
+  "Motor": "Moteur",
+  "Muda os textos do programa. As traduções ficam em biraflow/lang; faltando alguma, aparece o texto original em português.": "Modifie les textes de l'application. Les traductions se trouvent dans biraflow/lang ; s'il en manque une, le texte original en portugais s'affiche.",
+  "Mãos livres: parar após silêncio (s)": "Mains libres : arrêter après un silence (s)",
+  "Método": "Méthode",
+  "Nada foi reconhecido": "Rien n'a été reconnu",
+  "Nenhum ditado ainda.": "Aucune dictée pour l'instant.",
+  "Nenhum ditado para colar ainda": "Aucune dictée à coller pour le moment",
+  "Nenhum áudio guardado para transcrever": "Aucun audio enregistré à transcrire",
+  "Nenhuma correção encontrada nesse print.": "Aucune correction trouvée dans cette capture d'écran.",
+  "Nenhuma correção encontrada no print": "Aucune correction trouvée dans la capture",
+  "Nenhuma fala detectada": "Aucune voix détectée",
+  "Nomes do .exe separados por vírgula (ex.: valorant.exe, cs2.exe). Com um deles em foco, o atalho não faz nada, para não atrapalhar jogos e programas que usam a mesma tecla.": "Noms des .exe séparés par des virgules (ex. : valorant.exe, cs2.exe). Lorsqu'ils sont actifs, le raccourci est inactif afin de ne pas interférer avec les jeux ou logiciels utilisant la même touche.",
+  "Nomes e termos que a transcrição deve acertar, um por linha (ex.: Kubernetes, Ubiratan).": "Noms et termes que la transcription doit reconnaître, un par ligne (ex. : Kubernetes, Ubiratan).",
+  "Novas versões são baixadas e instaladas sozinhas, só quando você não está ditando. O instalador só é aceito se tiver a assinatura digital do Bira Flow.": "Les nouvelles versions sont téléchargées et installées automatiquement, uniquement lorsque vous ne dictez pas. Le programme d'installation n'est accepté que s'il comporte la signature numérique de Bira Flow.",
+  "Novo snippet": "Nouveau snippet",
+  "Não consegui abrir a imagem: {0}": "Impossible d'ouvrir l'image : {0}",
+  "Não consegui ler o print: {0}": "Impossible de lire la capture : {0}",
+  "Não ditar nestes apps": "Ne pas dicter dans ces applications",
+  "Não foi possível abrir o microfone: {0}": "Impossible d'accéder au microphone : {0}",
+  "Não foi possível alterar o início automático: {0}": "Impossible de modifier le démarrage automatique : {0}",
+  "Não foi possível apagar tudo: ": "Impossible de tout supprimer : ",
+  "Não foi possível exportar: {0}": "Impossible d'exporter : {0}",
+  "Não foi possível restaurar: {0}": "Impossible de restaurer : {0}",
+  "Não foi possível salvar: {0}": "Impossible d'enregistrer : {0}",
+  "Nível de pico {0:.3f}: abaixo do limite de silêncio ({1}). Verifique o microfone, o volume ou a permissão de microfone do Windows.": "Niveau de crête {0:.3f} : sous le seuil de silence ({1}). Vérifiez le micro, le volume ou les autorisations de micro de Windows.",
+  "Nível de pico {0:.3f}: baixo, mas acima do limite ({1}).": "Niveau de crête {0:.3f} : faible, mais supérieur au seuil ({1}).",
+  "Nível de pico {0:.3f}: ótimo, fala detectada ✓": "Niveau de crête {0:.3f} : parfait, voix détectée ✓",
+  "O ditado nunca é enviado para a área de transferência na nuvem do Windows.": "La dictée n'est jamais envoyée vers le presse-papiers dans le cloud de Windows.",
+  "O próximo ditado começa na hora e não corta a primeira sílaba. Enquanto isso, o ícone de microfone do Windows fica aceso (nada é gravado nem enviado fora de um ditado).": "La dictée suivante démarre instantanément sans couper la première syllabe. Pendant ce temps, l'icône de micro de Windows reste allumée (rien n'est enregistré ni envoyé en dehors des dictées).",
+  "O tom do texto muda conforme o app em que você dita. Aplicado pelo LLM; sem LLM, só os estilos \"Muito casual\" e \"Técnico\" têm efeito (tiram o ponto final de frases curtas).": "Le ton s'adapte à l'application où vous dictez. Appliqué par le LLM ; sans LLM, seuls les styles « Très informel » et « Technique » ont un effet (suppression du point final sur les phrases courtes).",
+  "Olha o que vem antes do cursor: no meio de uma frase, começa com minúscula e põe o espaço que faltar. Nomes próprios continuam com maiúscula.": "Analyse le texte avant le curseur : au milieu d'une phrase, commence par une minuscule et insère l'espace manquant. Les noms propres conservent leur majuscule.",
+  "Ollama": "Ollama",
+  "Opcionais. Sem chaves, tudo funciona offline com o modelo local e a limpeza local.": "Facultatif. Sans clé, tout fonctionne hors ligne avec le modèle local et le nettoyage local.",
+  "Opcional. Ex.: \"Use português do Brasil.\" ou \"Escreva números por extenso.\"": "Facultatif. Ex. : « Utilise le français de France. » ou « Écris les nombres en toutes lettres. »",
+  "Ouvindo": "Écoute en cours",
+  "Ouvindo… fale algo.": "À l'écoute… dites quelque chose.",
+  "Pacote do whisper.cpp": "Package whisper.cpp",
+  "Palavras": "Mots",
+  "Parada automática (s)": "Arrêt automatique (s)",
+  "Pastas antigas apagadas ✓": "Anciens dossiers supprimés ✓",
+  "Pastas antigas do Whisperflow (o nome anterior do app) ainda ocupam {0:.0f} MB: ": "Les anciens dossiers de Whisperflow (l'ancien nom de l'application) occupent encore {0:.0f} Mo : ",
+  "Pausar por 1 hora": "Mettre en pause pendant 1 heure",
+  "Pontuação e comandos falados": "Ponctuation et commandes vocales",
+  "Posição": "Position",
+  "Privacidade": "Confidentialité",
+  "Provedor": "Fournisseur",
+  "Pílula flutuante": "Pastille flottante",
+  "Qual microfone usar e quando uma gravação é descartada.": "Choix du microphone et conditions d'abandon d'un enregistrement.",
+  "Quando a transcrição escrever a palavra da esquerda, ela é trocada pela da direita. Palavra inteira, sem diferenciar maiúsculas. Ex.: ese → esse, cloud code → Claude Code.": "Chaque occurrence exacte du mot de gauche est remplacée par celui de droite (insensible à la casse). Ex. : acceuil → accueil, cloud code → Claude Code.",
+  "Quando eu disser": "Lorsque je dis",
+  "Quando o detector ouve algo parecido com a frase, só esse trecho (~2,5 s) é conferido pelo Whisper, e assim \"ei, vira aqui\" não dispara. Com o modelo local instalado (aba Transcrição), a conferência roda no seu PC e o áudio do ambiente nunca sai dele; sem ele, usa a API. Desligado, decide só o detector local, que dispara por engano mais vezes.": "Lorsque le détecteur repère une phrase similaire, seul cet extrait (~2,5 s) est analysé par Whisper pour éviter les faux déclenchements. Avec le modèle local installé (onglet Transcription), la vérification s'exécute sur votre PC sans que le son ambiant ne sorte ; sans lui, l'API est utilisée. Désactivé, seul le détecteur local décide, augmentant le risque d'erreurs.",
+  "Quando ouvir": "À l'écoute de",
+  "Quando você para de falar por esse tempo, o ditado termina e o texto é colado. Também termina com Esc (cancela) ou com um toque no atalho.": "Lorsque vous cessez de parler pendant cette durée, la dictée s'arrête et le texte est collé. Elle se termine aussi avec Échap (annuler) ou en appuyant sur le raccourci.",
+  "Refinamento": "Affinage",
+  "Refinamento indisponível: {0}": "Affinage indisponible : {0}",
+  "Refinando {0}/{1}…": "Affinage {0}/{1}…",
+  "Refinando…": "Affinage…",
+  "Remover": "Supprimer",
+  "Remover hesitações e palavras repetidas": "Supprimer les hésitations et les répétitions",
+  "Restaurar": "Rétablir",
+  "Restaurar o conteúdo anterior depois de colar": "Restaurer le contenu précédent après avoir collé",
+  "Restaurar padrões…": "Rétablir les paramètres par défaut…",
+  "Resumir": "Résumer",
+  "Retomar agora (pausado até {0})": "Reprendre maintenant (en pause jusqu'à {0})",
+  "Reunião gravando: {0}": "Enregistrement de la réunion en cours : {0}",
+  "Reunião iniciada: gravando o microfone": "Réunion démarrée : enregistrement du microphone",
+  "Reunião presencial iniciada: gravando pelo {0}, sem o áudio do PC. Deixe o notebook no meio da mesa. Encerre pelo ícone da bandeja.": "Réunion en présentiel démarrée : enregistrement via {0}, sans l'audio du PC. Placez l'ordinateur portable au centre de la table. Terminez depuis l'icône de la zone de notification.",
+  "Reunião recuperada: {0}": "Réunion récupérée : {0}",
+  "Reuniões": "Réunions",
+  "Sair": "Quitter",
+  "Salvar": "Enregistrer",
+  "Salvar .txt…": "Enregistrer sous .txt…",
+  "Salvar como…": "Enregistrer sous…",
+  "Salvar correção": "Enregistrer la correction",
+  "Salvar snippet": "Enregistrer le snippet",
+  "Se o LLM demorar mais que isto, o texto é inserido sem o refinamento.": "Si le LLM met plus de temps que cette limite, le texte est inséré sans affinage.",
+  "Se você corrigir uma palavra logo depois de ditar (\"ese\" → \"esse\") no WhatsApp, navegador, Word etc., a troca entra aqui sozinha e a pílula avisa. Corrija antes de enviar a mensagem. O Bira Flow lê só o campo onde colou o texto, por até 5 minutos (pausa se você trocar de janela), nunca campos de senha. Só ajustes de grafia viram regra; mudanças de conteúdo são ignoradas.": "Si vous corrigez un mot juste après avoir dicté (« ese » → « esse ») dans WhatsApp, un navigateur, Word, etc., la modification est ajoutée automatiquement ici et la pastille vous prévient. Corrigez avant d'envoyer le message. Bira Flow lit uniquement le champ où le texte a été collé, pendant 5 minutes maximum (en pause si vous changez de fenêtre), et jamais les champs de mot de passe. Seules les corrections orthographiques deviennent des règles ; les changements de contenu sont ignorés.",
+  "Se você esquecer o modo mãos livres ligado, ele para e transcreve sozinho. 0 desliga.": "Si vous oubliez d'arrêter le mode mains libres, il s'arrête et transcrit automatiquement. Définir à 0 pour désactiver.",
+  "Segurar para falar": "Maintenir pour parler",
+  "Segure para ditar; toque duas vezes para o modo mãos livres.": "Maintenez la touche pour dicter ; appuyez deux fois pour le mode mains libres.",
+  "Segure {0}": "Maintenez {0}",
+  "Selecione um ditado para corrigir.": "Sélectionnez une dictée à corriger.",
+  "Selecione um ditado para ver o texto final e a transcrição bruta. Duplo clique corrige.": "Sélectionnez une dictée pour afficher le texte final et la transcription brute. Double-cliquez pour corriger.",
+  "Selecione um texto, segure e fale a instrução. Sem seleção, escreve o que você pedir. Precisa de um provedor de LLM.": "Sélectionnez un texte, maintenez la touche et dictez l'instruction. Sans sélection, l'outil écrit ce que vous demandez. Nécessite un fournisseur de LLM.",
+  "Sem contas e sem telemetria. Com o modelo local, nada sai do seu computador.": "Aucun compte, aucune télémétrie. Avec le modèle local, rien ne quitte votre ordinateur.",
+  "Sem internet, a transcrição continua funcionando com o whisper.cpp.": "Même sans connexion Internet, la transcription continue de fonctionner avec whisper.cpp.",
+  "Separadas por vírgula. Use frases que você não falaria no fim de um texto comum.": "Séparées par une virgule. Utilisez des expressions que vous ne diriez pas à la fin d'un texte ordinaire.",
+  "Seus dados": "Vos données",
+  "Seus ditados recentes, guardados só neste computador. As ações desta página valem na hora.": "Vos dictées récentes, stockées uniquement sur cet ordinateur. Les actions sur cette page s'appliquent immédiatement.",
+  "Seus snippets": "Vos snippets",
+  "Silenciar música e outros apps durante o ditado": "Couper le son de la musique et des autres applications pendant la dictée",
+  "Silêncio total. ": "Silence total. ",
+  "Snippets": "Snippets",
+  "Sobre": "À propos",
+  "Solte todas as teclas para concluir. Esc cancela.": "Relâchez toutes les touches pour terminer. Esc annule.",
+  "Som": "Son",
+  "Sons de início, fim e cancelamento": "Sons de début, de fin et d'annulation",
+  "Só os apps que estão tocando são silenciados, e o som volta assim que a gravação termina.": "Seules les applications en cours de lecture sont coupées, et le son est rétabli dès la fin de l'enregistrement.",
+  "Só usado com o provedor Ollama, que roda modelos no seu computador.": "Utilisé uniquement avec le fournisseur Ollama, qui exécute des modèles en local sur votre ordinateur.",
+  "Tamanho": "Taille",
+  "Também valem sempre: terminar com \"cancelar ditado\" descarta o ditado; dizer só \"apagar último ditado\" apaga o que acabou de ser colado (se você não digitou nada depois).": "Fonctionne aussi en permanence : terminer par « annuler la dictée » ignore la saisie ; dire simplement « effacer la dernière dictée » supprime ce qui vient d'être collé (si vous n'avez rien tapé après).",
+  "Teclas de colar": "Touches pour coller",
+  "Tempo limite (s)": "Délai d'attente (s)",
+  "Tempo limite da API (s)": "Délai d'expiration de l'API (s)",
+  "Tempo máximo entre os dois toques que ativam o modo mãos livres.": "Délai maximal entre les deux appuis pour activer le mode mains libres.",
+  "Tempos": "Temporisations",
+  "Tentar de novo": "Réessayer",
+  "Testando…": "Test en cours…",
+  "Testar chaves": "Tester les clés",
+  "Testar microfone": "Tester le microphone",
+  "Teste": "Test",
+  "Texto": "Texte",
+  "Threads da CPU": "Threads du processeur",
+  "Tira \"hã\", \"hum\", \"uh\", repetições como \"eu eu\" e ajusta as maiúsculas, mesmo sem LLM.": "Supprime les « euh », « hum », les répétitions comme « je je » et ajuste les majuscules, même sans LLM.",
+  "Tire um print onde aparece o jeito certo (Win+Shift+S): o texto que você corrigiu, uma mensagem como \"é Taspio\" ou o nome escrito em outro lugar. Depois clique no botão ou aperte Ctrl+V nesta página. Também dá pelo menu da bandeja.": "Faites une capture d'écran de la bonne orthographe (Win+Maj+S) : le texte corrigé, un message du type « c'est Taspio » ou le nom écrit ailleurs. Cliquez ensuite sur le bouton ou faites Ctrl+V sur cette page. Également disponible depuis la zone de notification.",
+  "Toque duplo": "Double appui",
+  "Toques curtos e baixos para confirmar sem olhar.": "Signaux sonores courts et discrets pour confirmer sans regarder.",
+  "Transcrevendo {0:.0f} min…": "Transcription {0:.0f} min…",
+  "Transcrevendo {0:.0f} s…": "Transcription {0:.0f} s…",
+  "Transcrevendo…": "Transcription…",
+  "Transcrever de novo o último áudio": "Retranscrire le dernier enregistrement",
+  "Transcrever áudio": "Transcrire l'audio",
+  "Transcrever áudio…": "Transcrire le fichier audio…",
+  "Transcrição": "Transcription",
+  "Transcrição: whisper.cpp (MIT) e modelos Whisper da OpenAI (MIT). Interface: Sun Valley ttk theme (MIT), ícones Segoe Fluent. Áudio: PortAudio via sounddevice.": "Transcription : whisper.cpp (MIT) et modèles Whisper d'OpenAI (MIT). Interface : Sun Valley ttk theme (MIT), icônes Segoe Fluent. Audio : PortAudio via sounddevice.",
+  "Transcrição: {0} · Limpeza: {1}": "Transcription : {0} · Nettoyage : {1}",
+  "Um LLM remove vícios de fala, corrige pontuação e maiúsculas e aplica o estilo do app. Nunca traduz nem responde ao que foi ditado. Se falhar, o texto é inserido como está.": "Un LLM élimine les tics de langage, corrige la ponctuation et les majuscules, et applique le style de l'application. Il ne traduit jamais et ne répond jamais à ce qui a été dicté. En cas d'échec, le texte brut est inséré tel quel.",
+  "Usa o mesmo provedor do Refinamento. Sem provedor, fica só a transcrição.": "Utilise le même fournisseur que le Peaufinage. Sans fournisseur, seule la transcription est conservée.",
+  "Usando o modelo local: {0}": "Utilisation du modèle local : {0}",
+  "Usar o modelo local se a API falhar": "Utiliser le modèle local si l'API échoue",
+  "Use o padrão do Windows ou escolha um dispositivo (também aceita parte do nome, ex.: USB).": "Utilisez le périphérique par défaut de Windows ou choisissez-en un (recherche partielle acceptée, ex. : USB).",
+  "Vazio = padrão do provedor ({0}).": "Vide = valeur par défaut du fournisseur ({0}).",
+  "Vazio = padrão do provedor.": "Vide = valeur par défaut du fournisseur.",
+  "Ver como fica": "Aperçu",
+  "Verificando…": "Vérification…",
+  "Verificar agora": "Vérifier maintenant",
+  "Volta todas as configurações ao padrão (atalhos, motor, estilos...). Chaves de API, dicionário, snippets e histórico continuam como estão.": "Rétablit tous les paramètres par défaut (raccourcis, moteur, styles…). Les clés d'API, le dictionnaire, les snippets et l'historique restent inchangés.",
+  "Voltar todas as configurações ao padrão?\n\nChaves de API, dicionário, snippets e histórico não são alterados.": "Rétablir tous les paramètres par défaut ?\n\nLes clés d'API, le dictionnaire, les snippets et l'historique restent inchangés.",
+  "ditado": "dictée",
+  "ditados": "dictées",
+  "ditados hoje": "dictées aujourd'hui",
+  "economizados ao todo": "économisés au total",
+  "nenhum áudio baixado nas últimas 72 h": "aucun audio téléchargé au cours des dernières 72 h",
+  "palavras hoje": "mots aujourd'hui",
+  "versão {0}": "version {0}",
+  "{0} ditados exportados ✓": "{0} dictées exportées ✓",
+  "{0} ditados · {1} palavras · {2} palavras/min falando · ~{3} economizados em relação a digitar ({4} palavras/min)": "{0} dictées · {1} mots · {2} mots/min à l'oral · ~{3} économisés par rapport à la frappe ({4} mots/min)",
+  "{0} · versão {1}": "{0} · version {1}",
+  "Área de transferência": "Presse-papiers",
+  "Ótimo para chats: dite a mensagem e termine com \"pressione enter\" para enviar.": "Idéal pour les messageries : dictez le message et terminez par « appuyer sur enter » pour envoyer.",
+  "Último áudio baixado": "Dernier audio téléchargé",
+  "→": "→",
+  "●": "●",
+  "●  Alterações não salvas": "●  Modifications non enregistrées",
+  "✓ ": "✓ "
+ }
+}

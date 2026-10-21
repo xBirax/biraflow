@@ -69,7 +69,7 @@ New-Item -ItemType Directory -Force "build" | Out-Null
 VSVersionInfo(
   ffi=FixedFileInfo(filevers=($v), prodvers=($v), mask=0x3f, flags=0x0, OS=0x40004, fileType=0x1, subtype=0x0),
   kids=[StringFileInfo([StringTable('041604B0', [
-    StringStruct('CompanyName', 'Bira Flow'), StringStruct('FileDescription', 'Bira Flow - ditado por voz'),
+    StringStruct('CompanyName', 'Bira Flow'), StringStruct('FileDescription', 'Bira Flow - voice dictation'),
     StringStruct('FileVersion', '$version'), StringStruct('ProductName', 'Bira Flow'),
     StringStruct('ProductVersion', '$version'), StringStruct('LegalCopyright', 'Bira Flow')])]),
     VarFileInfo([VarStruct('Translation', [0x0416, 1200])])]
